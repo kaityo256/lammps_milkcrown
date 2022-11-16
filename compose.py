@@ -54,7 +54,7 @@ def readdata(f):
         if 'ITEM: BOX BOUNDS' in line:
             # シミュレーションボックスの取得
             xs, xe = f.readline().split()
-            ys, ye = f.readline().split()p
+            ys, ye = f.readline().split()
             zs, ze = f.readline().split()
             h.xs = float(xs)
             h.xe = float(xe)
