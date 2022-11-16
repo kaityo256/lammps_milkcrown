@@ -29,9 +29,9 @@ def save_file(filename, atoms):
         f.write("Position Data\n\n")
         f.write(f"{len(atoms)} atoms\n")
         f.write("1 atom types\n\n")
-        f.write("-40.00 40.00 xlo xhi\n")
-        f.write("-20.00 20.00 ylo yhi\n")
-        f.write("-20.00 20.00 zlo zhi\n")
+        f.write("-60.00 40.00 xlo xhi\n")
+        f.write("-40.00 40.00 ylo yhi\n")
+        f.write("-40.00 40.00 zlo zhi\n")
         f.write("\n")
         f.write("Atoms\n\n")
         for i in range(len(atoms)):
@@ -54,7 +54,7 @@ def readdata(f):
         if 'ITEM: BOX BOUNDS' in line:
             # シミュレーションボックスの取得
             xs, xe = f.readline().split()
-            ys, ye = f.readline().split()
+            ys, ye = f.readline().split()p
             zs, ze = f.readline().split()
             h.xs = float(xs)
             h.xe = float(xe)
@@ -67,12 +67,21 @@ def readdata(f):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("usage: python3 composite.py droplet wall")
+    if len(sys.argv) != 4:
+        print("usage: python3 composite.py droplet wall output.atoms")
         exit()
-    with open(sys.argv[1]) as f:
-        atoms = readdata(f)
-    save_file("milkcrown.atoms", atoms)
+    droplet_file = sys.argv[1]
+    wall_file = sys.argv[2]
+    output_file = sys.argv[3]
+    with open(droplet_file) as f:
+        droplet_atoms = readdata(f)
+    with open(wall_file) as f:
+        wall_atoms = readdata(f)
+    for i in range(len(droplet_atoms)):
+        (x, y, z) = droplet_atoms[i]
+        droplet_atoms[i] = (x - 40, y, z)
+    atoms = droplet_atoms + wall_atoms
+    save_file(output_file, atoms)
 
 
 if __name__ == '__main__':
