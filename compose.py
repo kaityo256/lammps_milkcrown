@@ -27,7 +27,7 @@ def read_atoms(f, h):
 def save_file(filename, atoms):
     with open(filename, "w") as f:
         f.write("Position Data\n\n")
-        f.write(f"{len(atoms)} atom\n")
+        f.write(f"{len(atoms)} atoms\n")
         f.write("1 atom types\n\n")
         f.write("-40.00 40.00 xlo xhi\n")
         f.write("-20.00 20.00 ylo yhi\n")
@@ -36,11 +36,11 @@ def save_file(filename, atoms):
         f.write("Atoms\n\n")
         for i in range(len(atoms)):
             x, y, z = atoms[i]
-            f.write(f"{i} 1 {x} {y} {z}\n")
+            f.write(f"{i+1} 1 {x} {y} {z}\n")
         f.write("\n")
         f.write("Velocities\n\n")
         for i in range(len(atoms)):
-            f.write(f"{i} 1 0 0 0")
+            f.write(f"{i+1} 0 0 0\n")
 
 
 def readdata(f):
